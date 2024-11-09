@@ -6,7 +6,7 @@ body {
   font-family: 'Libre Baskerville', serif;
 }
 
-.bg-marble-texture { 
+.bg-light-marble { 
   background-image: url('../public/images/marble-texture.jpg');
   background-size: cover;
   background-position: center;
@@ -14,7 +14,7 @@ body {
   min-height: 100vh;
 }
 
-.bg-dark-marble-texture {
+.bg-dark-marble {
   background-image: url('../public/images/dark-marble-texture.jpg');
   background-size: cover;
   background-position: center;

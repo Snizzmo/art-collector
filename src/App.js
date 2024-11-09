@@ -1,18 +1,23 @@
-import React from 'react';
+// src/App.js
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { GlobalContext } from './GlobalContext';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import OpenPackPage from './pages/OpenPackPage';
 import CollectionPage from './pages/CollectionPage';
 import AchievementsPage from './pages/AchievementsPage';
 import CommunityPage from './pages/CommunityPage';
-import Header from './components/Header';
-import Footer from './components/Footer';
 
-function App() {
+const App = () => {
+  const { theme } = useContext(GlobalContext); // Access theme from GlobalContext
+  console.log("App component is rendering");
+
   return (
-    <Router>
-      <div className="App">
+    <div className={`${theme === 'dark' ? 'bg-dark-marble' : 'bg-light-marble'} min-h-screen`}>
+      <Router>
         <Header />
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -23,9 +28,9 @@ function App() {
           <Route path="/community" element={<CommunityPage />} />
         </Routes>
         <Footer />
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
-}
+};
 
 export default App;
