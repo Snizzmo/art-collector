@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import Dashboard from './pages/Dashboard';
+import OpenPackPage from './pages/OpenPackPage';
+import CollectionPage from './pages/CollectionPage';
+import AchievementsPage from './pages/AchievementsPage';
+import CommunityPage from './pages/CommunityPage';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/open-pack" element={<OpenPackPage />} />
+          <Route path="/collection" element={<CollectionPage />} />
+          <Route path="/achievements" element={<AchievementsPage />} />
+          <Route path="/community" element={<CommunityPage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
