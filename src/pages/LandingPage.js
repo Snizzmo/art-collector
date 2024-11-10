@@ -14,7 +14,7 @@ const LandingPage = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="bg-gray-800 bg-opacity-80 p-10 rounded-lg shadow-2xl text-white dark:bg-gray-700"
+        className="bg-gray-800 bg-opacity-80 p-10 rounded-lg shadow-2xl text-white dark:bg-gray-700 flex flex-col items-center"
       >
         <h1 className="text-5xl font-serif mb-6 font-bold text-center">Discover Art in a New Way</h1>
         <p className="mb-8 text-lg text-center">

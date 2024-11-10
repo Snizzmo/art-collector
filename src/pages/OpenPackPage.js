@@ -1,7 +1,6 @@
-// src/pages/OpenPackPage.js
 import React, { useContext, useState } from 'react';
 import { GlobalContext } from '../GlobalContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Card from '../components/Card';
 import ArtworkModal from '../components/ArtworkModal';
 
@@ -9,6 +8,7 @@ const OpenPackPage = () => {
   const { theme, packsOpenedToday, setPacksOpenedToday, dailyLimit, collection, setCollection } = useContext(GlobalContext);
   const [cards, setCards] = useState([]);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
+  const [showCards, setShowCards] = useState(false);
 
   const artworkPool = [
     { title: 'Mona Lisa', artist: 'Leonardo da Vinci', rarity: 'legendary', year: 1503, description: 'One of the most famous paintings in the world...', image: './images/famous_artworks/mona-lisa.jpg' },
@@ -33,9 +33,13 @@ const OpenPackPage = () => {
       }
     }
 
-    setCards(selectedCards);
-    setCollection([...collection, ...selectedCards]);
-    setPacksOpenedToday(packsOpenedToday + 1);
+    setShowCards(false); // Hide current cards
+    setTimeout(() => {
+      setCards(selectedCards);
+      setCollection([...collection, ...selectedCards]);
+      setPacksOpenedToday(packsOpenedToday + 1);
+      setShowCards(true); // Show new cards
+    }, 600); // Delay to allow for the push down animation
   };
 
   return (
@@ -51,22 +55,25 @@ const OpenPackPage = () => {
       </div>
 
       <div className="pack-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-        {cards.map((card, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.2 }}
-          >
-            <Card 
-              title={card.title} 
-              artist={card.artist} 
-              rarity={card.rarity} 
-              image={card.image} 
-              onClick={() => setSelectedArtwork(card)} // Show modal on click
-            />
-          </motion.div>
-        ))}
+        <AnimatePresence>
+          {showCards && cards.map((card, index) => (
+            <motion.div
+              key={`${card.title}-${index}-${packsOpenedToday}`} // Unique key to trigger re-animation
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.6, delay: index * 0.3 }}
+            >
+              <Card 
+                title={card.title} 
+                artist={card.artist} 
+                rarity={card.rarity} 
+                image={card.image} 
+                onClick={() => setSelectedArtwork(card)} // Show modal on click
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
       {/* Artwork Modal */}
